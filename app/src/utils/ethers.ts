@@ -2,8 +2,12 @@ import { ethers } from "ethers";
 import provider from "../provider/provider";
 
 export const getBalance = async (adress: string): Promise<string | void> => {
-    const balance = await provider.getBalance(adress)
-    console.log(ethers.formatEther(balance))
+    try {
+        const balance = await provider.getBalance(adress)
+        console.log(ethers.formatEther(balance))
+    } catch (err) {
+        console.error('getBalance failed: ', err)
+    }
 }
 
 export const getBlock = async (): Promise<string | void> => {
@@ -16,12 +20,12 @@ export const getBlock = async (): Promise<string | void> => {
 }
 
 export const getTx = async (hash: string) => {
-   const tx = await provider.getTransaction(`0x${hash}`)
+   const tx = await provider.getTransaction(hash)
    console.log(tx)
 }
 
 export const getReceipt = async (hash: string) => {
-    const receipt = await provider.getTransactionReceipt(`0x${hash}`)
+    const receipt = await provider.getTransactionReceipt(hash)
     console.log(receipt)
 }
 
@@ -43,7 +47,7 @@ export const getNonce = async (adress: string) => {
     console.log(nonce)
 }
 
-export const sunscribeOnNewBlock = () => {
+export const subscribeOnNewBlock = () => {
     provider.on('block', (blockNumber) => {
         console.log('New block:', blockNumber);
     });
