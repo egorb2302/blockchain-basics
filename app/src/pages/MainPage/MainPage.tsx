@@ -42,8 +42,6 @@ export default function MainPage() {
             className={styles.inputs}
           />
         </div>
-
-        {/* Кнопки действий */}
         <div className={styles.actionsGrid}>
           <button
             onClick={() => getBalance(address)}
@@ -51,42 +49,36 @@ export default function MainPage() {
           >
             Баланс
           </button>
-
           <button
             onClick={() => getBlock()}
             className={styles.purpleBtn}
           >
             Последний блок
           </button>
-
           <button
             onClick={() => getTx(txHash)}
             className={styles.darkBtn}
           >
             Транзакция
           </button>
-
           <button
             onClick={() => getReceipt(txHash)}
             className={styles.darkBtn}
           >
             Receipt
           </button>
-
           <button
             onClick={() => getNonce(address)}
             className={styles.darkBtn}
           >
             Nonce
           </button>
-
           <button
             onClick={() => getFeeData()}
             className={styles.darkBtn}
           >
             Fee data
           </button>
-
           <button
             onClick={() =>
               getGasEstimate({ to: address, value: BigInt(0) })
@@ -95,7 +87,6 @@ export default function MainPage() {
           >
             Оценка газа
           </button>
-
           <button
             onClick={() => subscribeOnNewBlock()}
             className={styles.greenBtn}
@@ -103,7 +94,6 @@ export default function MainPage() {
             Подписаться на блоки
           </button>
         </div>
-
         <p className={styles.tinyTxt}>
           Contact with us if you have questions or suggestions with that mail<br/>
           <a className="hover:text-indigo-500" type="email" href="zxcgovnoedig@gmail.com">
