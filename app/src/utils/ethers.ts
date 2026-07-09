@@ -1,78 +1,99 @@
 import { ethers } from "ethers";
 import provider from "../provider/provider";
+import type { ProviderPropType } from "../types/types";
 
-export const getBalance = async (adress: string): Promise<string | void> => {
-    try {
-        const balance = await provider.getBalance(adress)
-        console.log(ethers.formatEther(balance))
-    } catch (err) {
-        console.error('getBalance failed: ', err)
-    }
-}
+export const getBalance = async (address: string): Promise<ProviderPropType | void> => {
+  try {
+    const balance = await provider.getBalance(address);
+    return { type: "balance", address, value: ethers.formatEther(balance) };
+  } catch (err) {
+    console.error("getBalance failed:", err);
+  }
+};
 
-export const getBlock = async (): Promise<string | void> => {
-    try {
-        const block = await provider.getBlock('latest')
-        if (block === null) {
-            console.log("Have no blocks yet.")
-        } else {
-            console.log(block.number, block.timestamp)
-        }   
-    } catch (err) {
-        console.log('getBlock failed: ', err)
+export const getBlock = async (): Promise<ProviderPropType | void> => {
+  try {
+    const block = await provider.getBlock("latest");
+    if (!block) {
+      console.log("Have no blocks yet.");
+      return;
     }
-}
+    return { type: "block", number: block.number, timestamp: block.timestamp };
+  } catch (err) {
+    console.error("getBlock failed:", err);
+  }
+};
 
-export const getTx = async (hash: string) => {
-    try {
-        const tx = await provider.getTransaction(hash)
-        console.log(tx)
-    } catch (err) {
-        console.log('getTx failed: ', err)
+export const getTx = async (hash: string): Promise<ProviderPropType | void> => {
+  try {
+    const tx = await provider.getTransaction(hash);
+    if (!tx) {
+      console.log("Transaction not found.");
+      return;
     }
-}
+    return {
+      type: "tx",
+      hash: tx.hash,
+      from: tx.from,
+      to: tx.to,
+      value: ethers.formatEther(tx.value),
+    };
+  } catch (err) {
+    console.error("getTx failed:", err);
+  }
+};
 
-export const getReceipt = async (hash: string) => {
-    try {
-        const receipt = await provider.getTransactionReceipt(hash)
-        console.log(receipt)
-    } catch (err) {
-        console.error('getReceipt failed: ', err)
+export const getReceipt = async (hash: string): Promise<ProviderPropType | void> => {
+  try {
+    const receipt = await provider.getTransactionReceipt(hash);
+    if (!receipt) {
+      console.log("Receipt not found.");
+      return;
     }
-}
+    return {
+      type: "receipt",
+      hash: receipt.hash,
+      status: receipt.status,
+      gasUsed: receipt.gasUsed.toString(),
+    };
+  } catch (err) {
+    console.error("getReceipt failed:", err);
+  }
+};
 
-export const getGasEstimate = async ({to, value = ethers.parseEther('1.0')}: {to: string, value: bigint}) => {
-    try {
-        const gasEstimate = await provider.estimateGas({
-            to: to,
-            value: value
-        })
-        console.log(gasEstimate)
-    } catch (err) {
-        console.error('getGasEstimate failed: ', err)
-    }
-}
+export const getGasEstimate = async (to: string): Promise<ProviderPropType | void> => {
+  try {
+    const gasEstimate = await provider.estimateGas({ to, value: BigInt(0) });
+    return { type: "gas", estimate: gasEstimate.toString() };
+  } catch (err) {
+    console.error("getGasEstimate failed:", err);
+  }
+};
 
-export const getFeeData = async () => {
-    try {
-        const feeData = await provider.getFeeData()
-        console.log(feeData.gasPrice, feeData.maxFeePerGas)
-    } catch (err) {
-        console.error('getFeeData: ', err)
-    }
-}
+export const getFeeData = async (): Promise<ProviderPropType | void> => {
+  try {
+    const feeData = await provider.getFeeData();
+    return {
+      type: "fee",
+      gasPrice: feeData.gasPrice?.toString() ?? null,
+      maxFeePerGas: feeData.maxFeePerGas?.toString() ?? null,
+    };
+  } catch (err) {
+    console.error("getFeeData failed:", err);
+  }
+};
 
-export const getNonce = async (adress: string) => {
-    try {
-        const nonce = await provider.getTransactionCount(adress)
-        console.log(nonce)
-    } catch (err) {
-        console.error('getNonce failed: ', err)
-    }
-}
+export const getNonce = async (address: string): Promise<ProviderPropType | void> => {
+  try {
+    const nonce = await provider.getTransactionCount(address);
+    return { type: "nonce", address, value: nonce };
+  } catch (err) {
+    console.error("getNonce failed:", err);
+  }
+};
 
 export const subscribeOnNewBlock = () => {
-    provider.on('block', (blockNumber) => {
-        console.log('New block:', blockNumber);
-    });
-}
+  provider.on("block", (blockNumber) => {
+    console.log("New block:", blockNumber);
+  });
+};

@@ -10,10 +10,26 @@ import {
   subscribeOnNewBlock,
 } from "../../utils/ethers";
 import styles from './styles';
+import Modal from '../../components/Modal';
+import type { ProviderPropType } from "../../types/types";
 
 export default function MainPage() {
   const [address, setAddress] = useState<string>("");
   const [txHash, setTxHash] = useState<string>("");
+  const [data, setData] = useState<null | ProviderPropType>(null);
+  const [modal, setModal] = useState<boolean>(false);
+
+  const getDataHandler = async (fn: () => Promise<ProviderPropType | void>) => {
+    const result = await fn();
+    if (!result) return;
+    setData(result);
+    setModal(true);
+  };
+ 
+  const closeModal = () => {
+    setModal(false);
+    setData(null);
+  };
 
   return (
     <div className={styles.base}>
@@ -44,44 +60,44 @@ export default function MainPage() {
         </div>
         <div className={styles.actionsGrid}>
           <button
-            onClick={() => getBalance(address)}
+            onClick={() => getDataHandler(() => getBalance(address))}
             className={styles.purpleBtn}
           >
             Баланс
           </button>
           <button
-            onClick={() => getBlock()}
+            onClick={() => getDataHandler(() => getBlock())}
             className={styles.purpleBtn}
           >
             Последний блок
           </button>
           <button
-            onClick={() => getTx(txHash)}
+            onClick={() => getDataHandler(() => getTx(txHash))}
             className={styles.darkBtn}
           >
             Транзакция
           </button>
           <button
-            onClick={() => getReceipt(txHash)}
+            onClick={() => getDataHandler(() => getReceipt(txHash))}
             className={styles.darkBtn}
           >
             Receipt
           </button>
           <button
-            onClick={() => getNonce(address)}
+            onClick={() => getDataHandler(() => getNonce(address))}
             className={styles.darkBtn}
           >
             Nonce
           </button>
           <button
-            onClick={() => getFeeData()}
+            onClick={() => getDataHandler(() => getFeeData())}
             className={styles.darkBtn}
           >
             Fee data
           </button>
           <button
             onClick={() =>
-              getGasEstimate({ to: address, value: BigInt(0) })
+              getDataHandler(() => getGasEstimate(address))
             }
             className={styles.darkBtn}
           >
@@ -101,6 +117,7 @@ export default function MainPage() {
           </a>
         </p>
       </div>
+      {modal || data ? <Modal data={data} onClose={closeModal} /> : null}
     </div>
   );
 }
