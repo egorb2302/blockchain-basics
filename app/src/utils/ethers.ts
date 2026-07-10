@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import provider from "../provider/provider";
 import type { ProviderPropType } from "../types/types";
-import abi from "../abi/abi";
+import { TestTokenAbi } from "../abi/TestToken";
 
 export const getBalance = async (address: string): Promise<ProviderPropType | void> => {
   try {
@@ -100,8 +100,8 @@ export const subscribeOnNewBlock = () => {
 };
 
 export const getTokenBalance = async (tokenAdress: string, userAdress: string): Promise<ProviderPropType | void> => {
-  const provider = new ethers.JsonRpcProvider('https://1rpc.io/eth');
-  const contract = new ethers.Contract(tokenAdress, abi, provider);
+  const provider = new ethers.JsonRpcProvider('http://127.0.0.1:8545');
+  const contract = new ethers.Contract(tokenAdress, TestTokenAbi , provider);
 
   const balanceRaw = await  contract.balanceOf(userAdress)
   const decimals = await contract.decimals()
