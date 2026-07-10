@@ -45,4 +45,5 @@ const titleByType: Record<ProviderPropType["type"], string> = {
   gas: "Оценка газа",
   fee: "Fee data",
   nonce: "Nonce",
+  tokenBalance: 'Баланс по токену',
 }

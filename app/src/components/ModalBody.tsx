@@ -65,6 +65,14 @@ export default function RenderBody(data: ProviderPropType) {
         </>
       );
 
+    case "tokenBalance":
+        return (
+          <>
+            <Row label="Баланс" value={data.value} />
+            <Row label="Токен" value={data.token} />
+          </>
+        )
+
     default:
       return null;
   }

@@ -8,6 +8,7 @@ import {
   getFeeData,
   getNonce,
   subscribeOnNewBlock,
+  getTokenBalance
 } from "../../utils/ethers";
 import styles from './styles';
 import Modal from '../../components/Modal';
@@ -15,6 +16,7 @@ import type { ProviderPropType } from "../../types/types";
 
 export default function MainPage() {
   const [address, setAddress] = useState<string>("");
+  const [tokenAddress, setTokenAddress] = useState<string>("");
   const [txHash, setTxHash] = useState<string>("");
   const [data, setData] = useState<null | ProviderPropType>(null);
   const [modal, setModal] = useState<boolean>(false);
@@ -30,6 +32,10 @@ export default function MainPage() {
     setModal(false);
     setData(null);
   };
+
+  console.log('Token:', tokenAddress);
+  console.log('User:', address);
+
 
   return (
     <div className={styles.base}>
@@ -58,7 +64,36 @@ export default function MainPage() {
             className={styles.inputs}
           />
         </div>
+        <div className={styles.tiWrapper}>
+          <h2 className={`${styles.labelsP} border-b w-full text-center pb-2`}>Баланс в токенах</h2>
+          <div className={styles.actionsGrid}>
+            <div className={styles.spacing}>
+              <label className={styles.labelsP}>Адрес пользователя</label>
+              <input
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="0x..."
+                className={styles.inputs}
+              />
+            </div>
+            <div className={styles.spacing}>
+              <label className={styles.labelsP}>Токен</label>
+              <input
+                value={tokenAddress}
+                onChange={(e) => setTokenAddress(e.target.value)}
+                placeholder="0x..."
+                className={styles.inputs}
+              />
+            </div>
+          </div>
+        </div>
         <div className={styles.actionsGrid}>
+          <button
+            onClick={() => getDataHandler(() => getTokenBalance(tokenAddress, address))}
+            className={`${styles.purpleBtn} col-span-2`}
+          >
+            Баланс в токенах
+          </button>
           <button
             onClick={() => getDataHandler(() => getBalance(address))}
             className={styles.purpleBtn}

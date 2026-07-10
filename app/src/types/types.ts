@@ -5,4 +5,5 @@ export type ProviderPropType =
   | { type: "receipt"; hash: string; status: number | null; gasUsed: string }
   | { type: "gas"; estimate: string }
   | { type: "fee"; gasPrice: string | null; maxFeePerGas: string | null }
-  | { type: "nonce"; address: string; value: number };
+  | { type: "nonce"; address: string; value: number }
+  | { type: "tokenBalance"; value: string; address: string, token: string};
