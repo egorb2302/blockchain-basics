@@ -18,18 +18,21 @@ If u finding that project interesting, u can run it and try by yourself:
 
 ```
 cd "app"
-```
-
-```
 bun install
 // or
 npm i
-```
-
-```
 bun run dev
 // or
 npm run dev
+```
+
+```
+сd "my-contracts"
+bun install
+// or
+npm i
+npx hardhat compile
+npx hardhat node
 ```
 
 See ya!
