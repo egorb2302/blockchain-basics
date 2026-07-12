@@ -1,6 +1,6 @@
 const { ethers } = require("hardhat");
 
-async function main() {
+export async function main() {
     const MY_ADDRESS = "0x30a3D61A25AC1440d52EAa1CBdD53ADDec1c8e00";
     
     const [owner] = await ethers.getSigners();
