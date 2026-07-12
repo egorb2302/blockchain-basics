@@ -378,6 +378,78 @@
       "artifacts": [
         "Payment"
       ]
+    },
+    "C:\\Users\\MIX PC\\Desktop\\blockchain basics\\my-contracts\\contracts\\Example.sol": {
+      "lastModificationDate": 1783875465290,
+      "contentHash": "1b2d0fb346b0c10ac9292286bbc3fab5",
+      "sourceName": "contracts/Example.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Marketplace"
+      ]
+    },
+    "C:\\Users\\MIX PC\\Desktop\\blockchain basics\\my-contracts\\contracts\\TestMath.sol": {
+      "lastModificationDate": 1783875191637,
+      "contentHash": "5e30d827183ab070283e934156550c9b",
+      "sourceName": "contracts/TestMath.sol",
+      "solcConfig": {
+        "version": "0.8.24",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.24"
+      ],
+      "artifacts": [
+        "Math"
+      ]
     }
   }
 }
